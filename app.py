@@ -6,6 +6,10 @@ import time
 import requests
 import os
 
+if not os.path.isfile(".env"):
+    print("\033[91m" + "No .env file found. Please create one and add your NTFY_URL variable." + "\033[0m")
+    exit(1)
+
 load_dotenv()
 
 url = "https://store.steampowered.com/sale/steamdeckrefurbished/"
