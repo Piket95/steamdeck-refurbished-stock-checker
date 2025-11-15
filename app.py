@@ -51,8 +51,7 @@ while True:
 
             log("Produkt: " + search_term["name"])
             log("Preis: " + price_element.get_attribute('innerHTML'))
-            log(f"In Stock: {'Yes' if is_in_stock else 'No'}")
-            log("\n")
+            log(f"In Stock: {'Yes' if is_in_stock else 'No'}\n")
 
             if is_in_stock:
                 log("Messaging via NTFY...")
