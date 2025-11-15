@@ -6,15 +6,24 @@ import time
 import requests
 import os
 
+import datetime
+
+def log(message, color=None):
+    timestamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    if color is not None:
+        print(f"\033[{color}m[{timestamp}] {message}\033[0m")
+    else:
+        print(f"[{timestamp}] {message}")
+
 if not os.path.isfile(".env"):
-    print("\033[91m" + "No .env file found. Please create one and add your NTFY_URL variable." + "\033[0m")
+    log("No .env file found. Please create one and add your NTFY_URL variable.")
     exit(1)
 
 load_dotenv()
 
 url = "https://store.steampowered.com/sale/steamdeckrefurbished/"
 
-print("Starting browser...")
+log("Starting browser...")
 
 while True:
     try:
@@ -40,20 +49,20 @@ while True:
             stock_indicator_element = price_element.find_element(By.XPATH, "../..//span")
             is_in_stock = "Out of stock" not in stock_indicator_element.get_attribute('innerHTML')
 
-            print("Produkt: " + search_term["name"])
-            print("Preis: " + price_element.get_attribute('innerHTML'))
-            print(f"In Stock: {'Yes' if is_in_stock else 'No'}")
-            print("\n")
+            log("Produkt: " + search_term["name"])
+            log("Preis: " + price_element.get_attribute('innerHTML'))
+            log(f"In Stock: {'Yes' if is_in_stock else 'No'}")
+            log("\n")
 
             if is_in_stock:
-                print("Messaging via NTFY...")
+                log("Messaging via NTFY...")
                 headers = {"Title": "Steam Deck Refurbished in Stock!", "Priority": "max", "Actions": f"view, Buy now!, {url}"}
                 message = f"\n{search_term['name']} is in stock!\n\nPreis: {price_element.get_attribute('innerHTML')}"
                 requests.post(f"{os.getenv('NTFY_URL')}", headers=headers, data=message.encode(encoding="utf-8"))
         
     except Exception as e:
-        print(e)
+        log(e, "91")
     finally:
         driver.quit()
-        print("Finished check! Idling....")
+        log("Finished check! Idling....")
         time.sleep(900) # 15 minutes
