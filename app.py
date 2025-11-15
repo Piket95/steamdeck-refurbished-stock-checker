@@ -42,7 +42,7 @@ while True:
 
             print("Produkt: " + search_term["name"])
             print("Preis: " + price_element.get_attribute('innerHTML'))
-            print("In Stock: " + "Yes" if is_in_stock else "No")
+            print(f"In Stock: {'Yes' if is_in_stock else 'No'}")
             print("\n")
 
             if is_in_stock:

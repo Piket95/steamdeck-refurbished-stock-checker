@@ -1,0 +1,6 @@
+services:
+  app:
+    build: .
+    container_name: steamdeck-refurbished-stock-checker
+    restart: unless-stopped
+    
