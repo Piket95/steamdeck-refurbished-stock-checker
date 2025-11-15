@@ -3,4 +3,6 @@ services:
     build: .
     # container_name: steamdeck-refurbished-stock-checker
     restart: unless-stopped
+    volumes:
+      - ./docker-volumes/app:/app
     
