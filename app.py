@@ -5,7 +5,7 @@ from dotenv import load_dotenv
 import time
 import requests
 import os
-
+import random
 import datetime
 
 def log(message, color=None):
@@ -64,4 +64,4 @@ while True:
     finally:
         driver.quit()
         log("Finished check! Idling....")
-        time.sleep(900) # 15 minutes
+        time.sleep(random.randint(600, 1200)) # 10-20 minutes
