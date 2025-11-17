@@ -8,6 +8,9 @@ import os
 import random
 import datetime
 
+print('[red]Hello[/red]')
+exit()
+
 def log(message, color=None):
     timestamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     if color is not None:
