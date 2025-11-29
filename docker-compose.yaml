@@ -1,8 +1,15 @@
 services:
-  prod:
+  app:
+    image: ghcr.io/piket95/steamdeck-refurbished-stock-checker:latest
+    container_name: steamdeck-refurbished-stock-checker
+    restart: unless-stopped
+    environment:
+      - TZ=Europe/Berlin
+    volumes:
+      - /custom/volume/path/.env:/app/.env # own .env file like the example one in the repo (.env.example)
+  test:
     build: .
     # container_name: steamdeck-refurbished-stock-checker
-    restart: unless-stopped
     environment:
       - TZ=Europe/Berlin
       - UID=1000
@@ -12,7 +19,6 @@ services:
     
   dev:
     image: python:3.13-alpine
-    restart: unless-stopped
     working_dir: /app
     environment:
       - TZ=Europe/Berlin
