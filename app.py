@@ -53,7 +53,7 @@ while True:
             log("Preis: " + price_element.get_attribute('innerHTML'))
             log(f"In Stock: {'Yes' if is_in_stock else 'No'}\n")
 
-            if is_in_stock:
+            if is_in_stock and os.getenv('NTFY_URL') is not None:
                 log("Messaging via NTFY...")
                 headers = {"Title": "Steam Deck Refurbished in Stock!", "Priority": "max", "Actions": f"view, Buy now!, {url}"}
                 message = f"\n{search_term['name']} is in stock!\n\nPreis: {price_element.get_attribute('innerHTML')}"
@@ -61,6 +61,11 @@ while True:
         
     except Exception as e:
         log(e, "91")
+
+        if os.getenv('NTFY_URL') is not None:# alert me with the error via ntfy
+            headers = {"Title": "Steam Deck Refurbished Stock Checker Error", "Priority": "max"}
+            message = f"{e}"
+            requests.post(f"{os.getenv('NTFY_URL')}", headers=headers, data=message.encode(encoding="utf-8"))
     finally:
         driver.quit()
         log("Finished check! Idling....")
