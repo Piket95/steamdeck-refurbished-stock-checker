@@ -39,7 +39,7 @@ while True:
             {"name": "Steam Deck 1TB OLED", "term": "Steam Deck 1TB OLED - Valve Certified Refurbished"}
         ]
 
-        time.sleep(3)
+        time.sleep(30)
 
         for search_term in search_terms:
             in_stock = False
